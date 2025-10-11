@@ -39,4 +39,4 @@ jobs:
 
       - name: publish
         run: |
-          rm -rf node-module .github package-lock.json && npm publish --access public
+          rm -rf node-module .github package-lock.json review-rules.js && npm publish --access public
