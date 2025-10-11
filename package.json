@@ -2,7 +2,7 @@
   "name": "@sheplu/eslint-config-eslint",
   "version": "0.1.0",
   "description": "Opinionated ESLint rules and config for consistent, high-quality code with zero setup.",
-  "main": "main.js",
+  "main": "eslint.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
