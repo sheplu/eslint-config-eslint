@@ -9,6 +9,7 @@ jobs:
     environment: prod
     permissions:
       contents: read
+      id-token: write
 
     steps:
       - name: Checkout
