@@ -31,5 +31,11 @@
   "homepage": "https://github.com/sheplu/eslint-config-eslint#readme",
   "peerDependencies": {
     "eslint": ">=9"
-  }
+  },
+  "files": [
+    "package.json",
+    "README.md",
+    "LICENSE",
+    "eslint.js"
+  ]
 }
