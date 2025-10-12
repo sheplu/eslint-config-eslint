@@ -4,7 +4,8 @@
   "description": "Opinionated ESLint rules and config for consistent, high-quality code with zero setup.",
   "main": "eslint.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",
@@ -37,5 +38,14 @@
     "README.md",
     "LICENSE",
     "eslint.js"
-  ]
+  ],
+  "devDependencies": {
+    "@eslint/js": "^9.37.0",
+    "@eslint/markdown": "^7.4.0",
+    "@sheplu/eslint-config": "^0.480.0",
+    "@stylistic/eslint-plugin": "^5.4.0",
+    "cheerio": "^1.1.2",
+    "eslint": "^9.37.0",
+    "globals": "^16.4.0"
+  }
 }
