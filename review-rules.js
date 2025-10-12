@@ -1,21 +1,29 @@
 import * as cheerio from 'cheerio';
 import config from './eslint.js';
 
-const page = await fetch("https://eslint.org/docs/latest/rules/");
-const data = await page.text();
+const logger = console;
+const successExit = 0;
+const errorExit = 1;
 
-const $ = cheerio.load(data);
-const rules = []
-$('a[class=rule__name]').each((i, element) => {
-    rules.push($(element).text())
+const page = await fetch('https://eslint.org/docs/latest/rules/');
+const html = await page.text();
+
+const $cheerio = cheerio.load(html);
+const fetchedRules = [];
+
+// eslint-disable-next-line no-unused-vars
+$cheerio('a[class=rule__name]').each((counter, element) => {
+	const item = $cheerio(element).text();
+
+	fetchedRules.push(item);
 });
 
-if( Object.keys(config[0].rules).length === rules.length ) {
-    console.log(`Same number of rules ${rules.length} / ${Object.keys(config[0].rules).length}`);
-    process.exit(0);
-    
-}
-else {
-    console.log(`Different number of rules ${rules.length} / ${Object.keys(config[0].rules).length}`);
-    process.exit(1);
+const [ { rules } ] = config;
+
+if (Object.keys(rules).length === fetchedRules.length) {
+	logger.log(`Same number of rules ${fetchedRules.length}/${Object.keys(rules).length}`);
+	process.exit(successExit);
+} else {
+	logger.log(`Different number of rules ${fetchedRules.length}/${Object.keys(rules).length}`);
+	process.exit(errorExit);
 };
