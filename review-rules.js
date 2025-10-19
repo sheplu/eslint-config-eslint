@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio';
-import config from './eslint.js';
+import { eslintRules } from './eslint.js';
 
 const logger = console;
 const successExit = 0;
@@ -18,7 +18,7 @@ $cheerio('a[class=rule__name]').each((counter, element) => {
 	fetchedRules.push(item);
 });
 
-const [ { rules } ] = config;
+const [ { rules } ] = eslintRules;
 
 if (Object.keys(rules).length === fetchedRules.length) {
 	logger.log(`Same number of rules ${fetchedRules.length}/${Object.keys(rules).length}`);
