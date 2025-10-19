@@ -1,5 +1,5 @@
 /* eslint-disable id-length, no-magic-numbers */
-export default [
+export const eslintRules = [
 	{
 		rules: {
 			'array-callback-return': [
