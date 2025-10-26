@@ -43,12 +43,12 @@
 		"eslint-suggestions.js"
   ],
   "devDependencies": {
-    "@eslint/js": "^9.37.0",
-    "@eslint/markdown": "^7.4.0",
-    "@sheplu/eslint-config": "^0.480.0",
-    "@stylistic/eslint-plugin": "^5.4.0",
+    "@eslint/js": "^9.38.0",
+    "@eslint/markdown": "^7.5.0",
+    "@sheplu/eslint-config": "^0.661.0",
+    "@stylistic/eslint-plugin": "^5.5.0",
     "cheerio": "^1.1.2",
-    "eslint": "^9.37.0",
+    "eslint": "^9.38.0",
     "globals": "^16.4.0"
   }
 }
