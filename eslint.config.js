@@ -1,5 +1,5 @@
 import { defineConfig } from 'eslint/config';
-import eslintRules from '@sheplu/eslint-config/src/eslint.js';
+import { eslintRules } from './eslint.js';
 import globals from 'globals';
 import js from '@eslint/js';
 import markdown from '@eslint/markdown';
