@@ -2,7 +2,7 @@
   "name": "@sheplu/eslint-config-eslint",
   "version": "0.1.0",
   "description": "Opinionated ESLint rules and config for consistent, high-quality code with zero setup.",
-  "main": "eslint.js",
+  "main": "index.js",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
@@ -37,10 +37,10 @@
     "package.json",
     "README.md",
     "LICENSE",
-    "eslint.js",
-		"eslint-layouts.js",
-		"eslint-problems.js",
-		"eslint-suggestions.js"
+    "index.js",
+    "eslint-layouts.js",
+    "eslint-problems.js",
+    "eslint-suggestions.js"
   ],
   "devDependencies": {
     "@eslint/js": "^9.38.0",

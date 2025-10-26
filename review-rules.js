@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio';
-import { eslintRules } from './eslint.js';
+import { eslintRules } from './index.js';
 
 const logger = console;
 const successExit = 0;
