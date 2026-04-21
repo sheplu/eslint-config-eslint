@@ -7,7 +7,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "node --test",
-    "test:coverage": "node --test --experimental-test-coverage"
+    "test:coverage": "node --test --experimental-test-coverage --test-coverage-lines=100 --test-coverage-branches=100 --test-coverage-functions=100"
   },
   "repository": {
     "type": "git",
@@ -32,8 +32,11 @@
     "url": "https://github.com/sheplu/eslint-config-eslint/issues"
   },
   "homepage": "https://github.com/sheplu/eslint-config-eslint#readme",
+  "engines": {
+    "node": ">=24"
+  },
   "peerDependencies": {
-    "eslint": ">=9"
+    "eslint": ">=10"
   },
   "files": [
     "package.json",

@@ -1,4 +1,3 @@
-/* eslint-disable id-length */
 export const eslintProblemsRules = {
 	rules: {
 		'array-callback-return': [
