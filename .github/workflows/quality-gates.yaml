@@ -25,6 +25,10 @@ jobs:
         run: |
           npm ci
 
+      - name: Audit dependencies
+        run: |
+          npm audit
+
       - name: Lint
         run: |
           npm run lint
