@@ -43,9 +43,9 @@
     "README.md",
     "LICENSE",
     "index.js",
-    "eslint-layouts.js",
-    "eslint-problems.js",
-    "eslint-suggestions.js"
+    "./src/eslint-layouts.js",
+    "./src/eslint-problems.js",
+    "./src/eslint-suggestions.js"
   ],
   "devDependencies": {
     "@eslint/js": "^10.0.1",

@@ -1,6 +1,6 @@
-import { eslintLayoutsRules } from './eslint-layouts.js';
-import { eslintProblemsRules } from './eslint-problems.js';
-import { eslintSuggestionsRules } from './eslint-suggestions.js';
+import { eslintLayoutsRules } from './src/eslint-layouts.js';
+import { eslintProblemsRules } from './src/eslint-problems.js';
+import { eslintSuggestionsRules } from './src/eslint-suggestions.js';
 
 export const eslintRules = [
 	{

@@ -26,7 +26,7 @@ export default defineConfig([
 		},
 	},
 	{
-		files: [ 'eslint-problems.js', 'eslint-suggestions.js' ],
+		files: [ './src/eslint-problems.js', './src/eslint-suggestions.js' ],
 		rules: {
 			'id-length': 'off',
 			'no-magic-numbers': 'off',
