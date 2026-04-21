@@ -13,23 +13,18 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 24
           registry-url: "https://registry.npmjs.org"
 
-      - name: NPM install
-        run: |
-          npm install
-
       - name: Version
-        if: github.event_name == 'release' && github.event.action == 'created'
         run: |
           VERSION=${{ github.event.release.tag_name }}
-          VERSION=${VERSION:1}
+          VERSION=${VERSION#v}
           CURRENT_VERSION=$(npm pkg get version | tr -d '"')
           if [ "$CURRENT_VERSION" != "$VERSION" ]; then
             npm version $VERSION --no-git-tag-version
@@ -37,6 +32,10 @@ jobs:
             echo "Version already set to $VERSION, skipping npm version command"
           fi
 
+      - name: publish (dry run)
+        run: |
+          npm publish --access public --provenance --dry-run
+
       - name: publish
         run: |
-          npm publish --access public
+          npm publish --access public --provenance
