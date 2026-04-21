@@ -1,9 +1,10 @@
 # @sheplu/eslint-config-eslint
 
 [![npm version](https://img.shields.io/npm/v/@sheplu/eslint-config-eslint.svg)](https://www.npmjs.com/package/@sheplu/eslint-config-eslint)
+[![quality gates](https://img.shields.io/github/actions/workflow/status/sheplu/eslint-config-eslint/quality-gates.yaml?branch=main&label=quality%20gates)](https://github.com/sheplu/eslint-config-eslint/actions/workflows/quality-gates.yaml?query=branch%3Amain)
 [![license](https://img.shields.io/npm/l/@sheplu/eslint-config-eslint.svg)](./LICENSE)
 
-Opinionated, exhaustive configuration for every core ESLint rule — ready to drop into an ESLint 9+ flat config.
+Opinionated, exhaustive configuration for every core ESLint rule — ready to drop into an ESLint 10+ flat config.
 
 This package only ships rules from [`eslint/eslint`](https://eslint.org/docs/latest/rules/) itself (no plugins). Every non-deprecated upstream rule is configured explicitly, so nothing is left to defaults and nothing silently changes when ESLint ships a new core rule — a scheduled CI job diffs the package against `eslint.org/docs/latest/rules/` every week and opens an issue on drift.
 
@@ -13,7 +14,7 @@ This package only ships rules from [`eslint/eslint`](https://eslint.org/docs/lat
 npm install --save-dev @sheplu/eslint-config-eslint eslint
 ```
 
-Requires `eslint >= 9` (flat config).
+Requires `eslint >= 10` (flat config) and Node `>= 24`.
 
 ## Usage
 
@@ -37,11 +38,11 @@ export default defineConfig([
 
 All rules are organized after ESLint's own documentation categories:
 
-| Source                   | Category                                                                            | Rules |
-| ------------------------ | ----------------------------------------------------------------------------------- | ----- |
-| `eslint-problems.js`     | [Possible problems](https://eslint.org/docs/latest/rules/#possible-problems)        | 60    |
-| `eslint-suggestions.js`  | [Suggestions](https://eslint.org/docs/latest/rules/#suggestions)                    | 147   |
-| `eslint-layouts.js`      | [Layout & formatting](https://eslint.org/docs/latest/rules/#layout--formatting)     | 1     |
+| Source                   | Category                                                                            |
+| ------------------------ | ----------------------------------------------------------------------------------- |
+| `eslint-problems.js`     | [Possible problems](https://eslint.org/docs/latest/rules/#possible-problems)        |
+| `eslint-suggestions.js`  | [Suggestions](https://eslint.org/docs/latest/rules/#suggestions)                    |
+| `eslint-layouts.js`      | [Layout & formatting](https://eslint.org/docs/latest/rules/#layout--formatting)     |
 
 Layout rules are deliberately minimal — formatting is better delegated to a dedicated stylistic plugin (see [`@sheplu/eslint-config`](https://www.npmjs.com/package/@sheplu/eslint-config) if you want a matching stylistic layer).
 

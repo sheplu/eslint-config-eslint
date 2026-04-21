@@ -1,4 +1,3 @@
-/* eslint-disable id-length, no-magic-numbers */
 export const eslintSuggestionsRules = {
 	rules: {
 		'accessor-pairs': [

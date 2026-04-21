@@ -26,6 +26,13 @@ export default defineConfig([
 		},
 	},
 	{
+		files: [ 'eslint-problems.js', 'eslint-suggestions.js' ],
+		rules: {
+			'id-length': 'off',
+			'no-magic-numbers': 'off',
+		},
+	},
+	{
 		'extends': [
 			'markdown/recommended',
 			markdownRules,
