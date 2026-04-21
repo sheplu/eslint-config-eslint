@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage"
   },
   "repository": {
     "type": "git",
@@ -47,7 +49,6 @@
     "@eslint/markdown": "^8.0.1",
     "@sheplu/eslint-config": "^0.767.2",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "cheerio": "^1.2.0",
     "eslint": "^10.2.1",
     "globals": "^17.5.0"
   }

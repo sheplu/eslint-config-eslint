@@ -1,29 +1,33 @@
-import * as cheerio from 'cheerio';
-import { eslintRules } from './index.js';
+const UPSTREAM_URL = 'https://eslint.org/docs/latest/rules/';
+const RULE_NAME_PATTERN = /<a[^>]*\sclass="rule__name"[^>]*>(?<name>[^<]+)<\/a>/gv;
 
-const logger = console;
-const successExit = 0;
-const errorExit = 1;
+export function parseUpstreamRules(html) {
+	const names = [];
 
-const page = await fetch('https://eslint.org/docs/latest/rules/');
-const html = await page.text();
+	for (const match of html.matchAll(RULE_NAME_PATTERN)) {
+		names.push(match.groups.name.trim());
+	}
 
-const $cheerio = cheerio.load(html);
-const fetchedRules = [];
+	return names;
+}
 
-// eslint-disable-next-line no-unused-vars
-$cheerio('a[class=rule__name]').each((counter, element) => {
-	const item = $cheerio(element).text();
+export async function fetchUpstreamRules() {
+	const page = await fetch(UPSTREAM_URL);
+	const html = await page.text();
 
-	fetchedRules.push(item);
-});
+	return parseUpstreamRules(html);
+}
 
-const [ { rules } ] = eslintRules;
+export function diffRules(configRuleNames, upstreamRuleNames) {
+	const configRules = new Set(configRuleNames);
+	const upstreamRules = new Set(upstreamRuleNames);
+	const missing = [ ...upstreamRules ].filter((name) => !configRules.has(name));
+	const extra = [ ...configRules ].filter((name) => !upstreamRules.has(name));
 
-if (Object.keys(rules).length === fetchedRules.length) {
-	logger.log(`Same number of rules ${fetchedRules.length}/${Object.keys(rules).length}`);
-	process.exit(successExit);
-} else {
-	logger.log(`Different number of rules ${fetchedRules.length}/${Object.keys(rules).length}`);
-	process.exit(errorExit);
-};
+	return {
+		configRules,
+		extra,
+		missing,
+		upstreamRules,
+	};
+}

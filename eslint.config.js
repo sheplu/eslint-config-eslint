@@ -3,7 +3,7 @@ import { eslintRules } from './index.js';
 import globals from 'globals';
 import js from '@eslint/js';
 import markdown from '@eslint/markdown';
-import markdownRules from '@sheplu/eslint-config/src/markdown.js';
+import { markdownRules } from '@sheplu/eslint-config/src/markdown.js';
 import stylistic from '@stylistic/eslint-plugin';
 import stylisticRules from '@sheplu/eslint-config/src/stylistic.js';
 
@@ -22,6 +22,7 @@ export default defineConfig([
 		// eslint-disable-next-line object-shorthand
 		'plugins': { '@stylistic': stylistic, js },
 		'rules': {
+			'@stylistic/curly-newline': 'warn',
 		},
 	},
 	{
