@@ -5,9 +5,14 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 jobs:
   quality-gates:
     runs-on: ubuntu-latest
+    timeout-minutes: 0.5
     permissions:
       contents: read
 

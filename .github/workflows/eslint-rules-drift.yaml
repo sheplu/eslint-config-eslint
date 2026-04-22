@@ -7,6 +7,7 @@ on:
 jobs:
   eslint-rules-drift:
     runs-on: ubuntu-latest
+    timeout-minutes: 0.5
     permissions:
       contents: read
       issues: write
