@@ -2,11 +2,14 @@
 
 [![npm version](https://img.shields.io/npm/v/@sheplu/eslint-config-eslint.svg)](https://www.npmjs.com/package/@sheplu/eslint-config-eslint)
 [![quality gates](https://img.shields.io/github/actions/workflow/status/sheplu/eslint-config-eslint/quality-gates.yaml?branch=main&label=quality%20gates)](https://github.com/sheplu/eslint-config-eslint/actions/workflows/quality-gates.yaml?query=branch%3Amain)
+[![upstream drift](https://img.shields.io/github/actions/workflow/status/sheplu/eslint-config-eslint/eslint-rules-drift.yaml?label=upstream%20drift)](https://github.com/sheplu/eslint-config-eslint/actions/workflows/eslint-rules-drift.yaml)
 [![license](https://img.shields.io/npm/l/@sheplu/eslint-config-eslint.svg)](./LICENSE)
 
 Opinionated, exhaustive configuration for every core ESLint rule — ready to drop into an ESLint 10+ flat config.
 
 This package only ships rules from [`eslint/eslint`](https://eslint.org/docs/latest/rules/) itself (no plugins). Every non-deprecated upstream rule is configured explicitly, so nothing is left to defaults and nothing silently changes when ESLint ships a new core rule — a scheduled CI job diffs the package against `eslint.org/docs/latest/rules/` every week and opens an issue on drift.
+
+**199 rules** configured across three categories (59 problems, 139 suggestions, 1 layout).
 
 ## Installation
 
@@ -68,5 +71,5 @@ npm run lint:fix         # lint with autofix
 
 See `AGENTS.md` for the short version of how this repo is laid out and the CI quality gates. A few things worth knowing up front:
 
-- `npm ci` wires `core.hooksPath` to `.githooks/` via the `prepare` script — pre-commit and pre-push hooks run lint and tests locally.
+- Git hooks live in `.githooks/` — `npm ci` runs the `prepare` script which points `core.hooksPath` there. The pre-commit hook runs lint and tests; the pre-push hook adds coverage and `npm audit`, and blocks direct pushes to `main`.
 - AI tooling assets (agent rules, prompts) are distributed via [`apkg`](https://apkg.ai) rather than committed. `apkg.json` and `apkg-lock.json` are in the repo; the resolved files under `.codex/`, `.claude/`, `.cursor/`, etc. are gitignored and materialized by running `apkg` install. CI does this automatically in `quality-gates.yaml`. If you contribute using an AI agent and want those rule files locally, install `apkg` and run it against this repo.
