@@ -19,11 +19,12 @@ Instructions for coding agents working in this repository.
 - Node `>= 24` (uses `node --test --experimental-test-coverage`)
 - ESLint `>= 10` (flat config only)
 - ESM: `"type": "module"` — use `import`/`export`, no CommonJS
+- Git hooks: `npm ci` runs the `prepare` script, which points `core.hooksPath` at `.githooks/` (pre-commit and pre-push run lint/tests locally).
 
 ## Commands
 
 ```sh
-npm ci                   # install
+npm ci                   # install (also wires up .githooks/ via the prepare script)
 npm test                 # node --test (includes live upstream drift check — needs network)
 npm run test:coverage    # same, with 100% line/branch/function coverage enforced
 npm run lint             # eslint .
@@ -32,6 +33,16 @@ npm audit                # must pass with zero advisories (see CI)
 ```
 
 The upstream drift test in `test/index.test.js` fetches `eslint.org` at runtime. It will fail without network access — that is expected, not a bug to "fix" by mocking.
+
+## AI tooling (apkg)
+
+This repo uses [`apkg`](https://apkg.ai) to distribute AI-tooling assets (agent rules, prompts, etc.) without committing vendor-specific files to the tree. The manifest is `apkg.json` and the lockfile is `apkg-lock.json` — both are committed.
+
+Tooling directories are **gitignored** and provisioned on demand:
+
+- `.codex/`, `.claude/`, `.cursor/`, `CLAUDE.md`, and `apkg_packages/` are ignored (see `.gitignore`).
+- CI runs `apkg-ai/setup-apkg` in `.github/workflows/quality-gates.yaml` with `--frozen-lockfile` before the test step, so workflow-authoring rules are present when tests run.
+- Locally, if you contribute using an AI agent and want these rule files materialized, install `apkg` and run its install command against this repo — see the upstream docs. The `<!-- apkg:rules -->` block below is maintained by `apkg` and points at paths that only exist after installation.
 
 ## Code style
 
@@ -54,7 +65,8 @@ The upstream drift test in `test/index.test.js` fetches `eslint.org` at runtime.
 1. `npm ci`
 2. `npm audit` — **must pass with no advisories**. Do not add `--audit-level` to filter findings; fix or upgrade the offending dependency instead.
 3. `npm run lint`
-4. `npm run test:coverage` — coverage thresholds are 100% for lines, branches, and functions.
+4. `apkg-ai/setup-apkg` — installs AI-tooling assets from `apkg-lock.json` (`--frozen-lockfile`).
+5. `npm run test:coverage` — coverage thresholds are 100% for lines, branches, and functions.
 
 A separate weekly workflow (`eslint-rules-drift.yaml`) runs the upstream diff and opens an issue on drift.
 

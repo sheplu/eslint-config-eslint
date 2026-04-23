@@ -63,3 +63,10 @@ npm run lint:fix         # lint with autofix
 
 - as part of `npm test`,
 - on a weekly schedule (`.github/workflows/eslint-rules-drift.yaml`), which opens a GitHub issue if new rules appear, are renamed, or are removed upstream.
+
+## Contributing
+
+See `AGENTS.md` for the short version of how this repo is laid out and the CI quality gates. A few things worth knowing up front:
+
+- `npm ci` wires `core.hooksPath` to `.githooks/` via the `prepare` script — pre-commit and pre-push hooks run lint and tests locally.
+- AI tooling assets (agent rules, prompts) are distributed via [`apkg`](https://apkg.ai) rather than committed. `apkg.json` and `apkg-lock.json` are in the repo; the resolved files under `.codex/`, `.claude/`, `.cursor/`, etc. are gitignored and materialized by running `apkg` install. CI does this automatically in `quality-gates.yaml`. If you contribute using an AI agent and want those rule files locally, install `apkg` and run it against this repo.
