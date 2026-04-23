@@ -1,4 +1,9 @@
-import { describe, it } from 'node:test';
+import {
+	afterEach,
+	describe,
+	it,
+	mock,
+} from 'node:test';
 import {
 	diffRules,
 	fetchUpstreamRules,
@@ -171,6 +176,124 @@ describe('diffRules', () => {
 
 		assert.equal(configRules.size, uniqueCount);
 		assert.equal(upstreamRules.size, uniqueCount);
+	});
+});
+
+const HTTP_OK = 200;
+const HTTP_NOT_FOUND = 404;
+const STEP_ONE = 1;
+const ZERO = 0;
+const COUNT_BELOW_MINIMUM = 10;
+const COUNT_ABOVE_MINIMUM = 200;
+
+function headersWithContentType(contentType) {
+	return {
+		get(name) {
+			if (name.toLowerCase() === 'content-type') {
+				return contentType;
+			}
+
+			return null;
+		},
+	};
+}
+
+function makeFetchResponse({
+	body,
+	contentType = 'text/html; charset=utf-8',
+	isOk = true,
+	status = HTTP_OK,
+	statusText = 'OK',
+}) {
+	const headers = headersWithContentType(contentType);
+
+	function text() {
+		return Promise.resolve(body);
+	}
+
+	// Non-shorthand throughout so the short `ok` key (from the Response API shape) doesn't mix styles with the rest.
+	/* eslint-disable id-length */
+	return {
+		headers: headers,
+		ok: isOk,
+		status: status,
+		statusText: statusText,
+		text: text,
+	};
+	/* eslint-enable id-length */
+}
+
+function buildRuleHtml(count) {
+	const anchors = [];
+
+	for (let index = ZERO; index < count; index = index + STEP_ONE) {
+		anchors.push(`<a href="/docs/latest/rules/r${index}" class="rule__name">r${index}</a>`);
+	}
+
+	return anchors.join('\n');
+}
+
+function stubFetchWith(response) {
+	mock.method(globalThis, 'fetch', () => Promise.resolve(response));
+}
+
+describe('fetchUpstreamRules failure guards', () => {
+	afterEach(() => {
+		mock.restoreAll();
+	});
+
+	it('throws when the upstream response is not ok', async () => {
+		stubFetchWith(makeFetchResponse({
+			body: '',
+			isOk: false,
+			status: HTTP_NOT_FOUND,
+			statusText: 'Not Found',
+		}));
+
+		await assert.rejects(fetchUpstreamRules, /HTTP 404 Not Found/v);
+	});
+
+	it('throws when the content-type is not text/html', async () => {
+		stubFetchWith(makeFetchResponse({
+			body: '{}',
+			contentType: 'application/json',
+		}));
+
+		await assert.rejects(fetchUpstreamRules, /Unexpected content-type/v);
+	});
+
+	it('throws when the content-type header is missing', async () => {
+		stubFetchWith(makeFetchResponse({
+			body: '',
+			contentType: null,
+		}));
+
+		await assert.rejects(fetchUpstreamRules, /Unexpected content-type/v);
+	});
+
+	it('throws when fewer than the minimum expected rules are parsed', async () => {
+		stubFetchWith(makeFetchResponse({
+			body: buildRuleHtml(COUNT_BELOW_MINIMUM),
+		}));
+
+		await assert.rejects(fetchUpstreamRules, /Parsed only 10 rules/v);
+	});
+});
+
+describe('fetchUpstreamRules happy path', () => {
+	afterEach(() => {
+		mock.restoreAll();
+	});
+
+	it('returns the parsed rule list when the response is healthy', async () => {
+		stubFetchWith(makeFetchResponse({
+			body: buildRuleHtml(COUNT_ABOVE_MINIMUM),
+		}));
+
+		const names = await fetchUpstreamRules();
+
+		assert.equal(names.length, COUNT_ABOVE_MINIMUM);
+		assert.equal(names[ZERO], 'r0');
 	});
 });
 
