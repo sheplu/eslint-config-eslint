@@ -2,7 +2,7 @@
   "name": "@sheplu/eslint-config-eslint",
   "version": "0.1.0",
   "type": "project",
-  "description": "",
+  "description": "Opinionated ESLint rules and config for consistent, high-quality code with zero setup.",
   "license": "MIT",
   "readme": "README.md",
   "authors": [
