@@ -12,7 +12,7 @@ concurrency:
 jobs:
   quality-gates:
     runs-on: ubuntu-latest
-    timeout-minutes: 0.5
+    timeout-minutes: 1
     permissions:
       contents: read
 
