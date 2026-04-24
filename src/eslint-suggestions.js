@@ -121,7 +121,20 @@ export const eslintSuggestionsRules = {
 				properties: 'always',
 			},
 		],
-		'id-match': [ 'off' ],
+		'id-match': [
+			'error',
+			'^(?:' +
+			'[a-z][a-z0-9]*(?:[A-Z][a-z0-9]*)*' +
+			'|[A-Z][a-z0-9]*(?:[A-Z][a-z0-9]*)*' +
+			'|[A-Z_][A-Z0-9_]*' +
+			')$',
+			{
+				classFields: true,
+				ignoreDestructuring: false,
+				onlyDeclarations: false,
+				properties: true,
+			},
+		],
 		'init-declarations': [ 'error', 'always' ],
 		'logical-assignment-operators': [
 			'error',
