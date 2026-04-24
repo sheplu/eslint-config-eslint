@@ -58,6 +58,7 @@ npm test                 # run the test suite (includes upstream drift check)
 npm run test:coverage    # run tests with coverage
 npm run lint             # lint the package itself
 npm run lint:fix         # lint with autofix
+npm run setup:hooks      # wire .githooks/ as the git hooks path (run once)
 ```
 
 ## Upstream drift
@@ -71,5 +72,5 @@ npm run lint:fix         # lint with autofix
 
 See `AGENTS.md` for the short version of how this repo is laid out and the CI quality gates. A few things worth knowing up front:
 
-- Git hooks live in `.githooks/` — `npm ci` runs the `prepare` script which points `core.hooksPath` there. The pre-commit hook runs lint and tests; the pre-push hook adds coverage and `npm audit`, and blocks direct pushes to `main`.
+- Git hooks live in `.githooks/`. Run `npm run setup:hooks` once after cloning to point `core.hooksPath` there. The pre-commit hook runs lint and tests; the pre-push hook adds coverage and `npm audit`, and blocks direct pushes to `main`. (Hooks are opt-in because `.npmrc` sets `ignore-scripts=true` for supply-chain safety.)
 - AI tooling assets (agent rules, prompts) are distributed via [`apkg`](https://apkg.ai) rather than committed. `apkg.json` and `apkg-lock.json` are in the repo; the resolved files under `.codex/`, `.claude/`, `.cursor/`, etc. are gitignored and materialized by running `apkg` install. CI does this automatically in `quality-gates.yaml`. If you contribute using an AI agent and want those rule files locally, install `apkg` and run it against this repo.
