@@ -19,12 +19,13 @@ Instructions for coding agents working in this repository.
 - Node `>= 24` (uses `node --test --experimental-test-coverage`)
 - ESLint `>= 10` (flat config only)
 - ESM: `"type": "module"` — use `import`/`export`, no CommonJS
-- Git hooks: `npm ci` runs the `prepare` script, which points `core.hooksPath` at `.githooks/` (pre-commit and pre-push run lint/tests locally).
+- Git hooks: `.npmrc` sets `ignore-scripts=true`, so `npm ci` does **not** wire hooks automatically. Run `npm run setup:hooks` once after cloning to point `core.hooksPath` at `.githooks/` (pre-commit and pre-push run lint/tests locally).
 
 ## Commands
 
 ```sh
-npm ci                   # install (also wires up .githooks/ via the prepare script)
+npm ci                   # install dependencies
+npm run setup:hooks      # wire .githooks/ as core.hooksPath (run once after cloning)
 npm test                 # node --test (includes live upstream drift check — needs network)
 npm run test:coverage    # same, with 100% line/branch/function coverage enforced
 npm run lint             # eslint .
