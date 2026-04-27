@@ -23,7 +23,7 @@ Instructions for coding agents working in this repository.
 
 ## Commands
 
-```sh
+```sh title="commands"
 npm ci                   # install dependencies
 npm run setup:hooks      # wire .githooks/ as core.hooksPath (run once after cloning)
 npm test                 # node --test (includes live upstream drift check — needs network)
