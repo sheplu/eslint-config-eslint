@@ -13,7 +13,7 @@ This package only ships rules from [`eslint/eslint`](https://eslint.org/docs/lat
 
 ## Installation
 
-```sh
+```sh title="install"
 npm install --save-dev @sheplu/eslint-config-eslint eslint
 ```
 
@@ -23,7 +23,7 @@ Requires `eslint >= 10` (flat config) and Node `>= 24`.
 
 In your `eslint.config.js`:
 
-```js
+```js title="eslint.config.js"
 import { defineConfig } from 'eslint/config';
 import { eslintRules } from '@sheplu/eslint-config-eslint';
 
@@ -53,7 +53,7 @@ Every rule is set to `error` with options spelled out explicitly. If you need a 
 
 ## Scripts
 
-```sh
+```sh title="scripts"
 npm test                 # run the test suite (includes upstream drift check)
 npm run test:coverage    # run tests with coverage
 npm run lint             # lint the package itself
